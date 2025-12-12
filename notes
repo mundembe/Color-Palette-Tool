@@ -1,0 +1,4 @@
+dependancies
+    - node
+    - git
+    - npm create vite@latest color-paletter -- --template react
