@@ -1,0 +1,25 @@
+.app-root {
+  display: flex;
+  height: 100vh;
+  gap: 0;
+}
+
+/* left panel (controls) */
+.controls-panel {
+  width: 40%;
+  min-width: 360px;
+  padding: 2rem;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04) inset;
+  overflow-y: auto;
+}
+
+/* right panel (preview) */
+.preview-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(180deg, #f8fafc, #eef2f7);
+}

@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import PaletteControls from "./components/PaletteControls";
+import MobilePreview from "./components/MobilePreview";
+import "./styles/app.css"; // layout styles
 
-function App() {
-  const [count, setCount] = useState(0)
+const defaultPalette = {
+  primary: "#3498db",
+  secondary: "#2ecc71",
+  accent: "#e67e22",
+  background: "#ffffff",
+  text: "#333333"
+};
+
+export default function App() {
+  const [palette, setPalette] = useState(() => {
+    const saved = localStorage.getItem("palette");
+    return saved ? JSON.parse(saved) : defaultPalette;
+  });
+
+  useEffect(() => {
+    // apply CSS variables globally
+    Object.entries(palette).forEach(([k, v]) => {
+      document.documentElement.style.setProperty(`--${k}`, v);
+    });
+    // persist
+    localStorage.setItem("palette", JSON.stringify(palette));
+  }, [palette]);
+
+  const updateColor = (name, value) => {
+    setPalette(prev => ({ ...prev, [name]: value }));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-root">
+      <PaletteControls palette={palette} onColorChange={updateColor} />
+      <MobilePreview />
+    </div>
+  );
 }
-
-export default App
