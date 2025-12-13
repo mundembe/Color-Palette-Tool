@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PaletteControls from "./components/PaletteControls";
 import MobilePreview from "./components/MobilePreview";
 import "./styles/app.css"; // layout styles
+import { queryToPalette } from "./utils/palette";
 
 const defaultPalette = {
   primary: "#3498db",
@@ -13,6 +14,8 @@ const defaultPalette = {
 
 export default function App() {
   const [palette, setPalette] = useState(() => {
+    const urlPalette = queryToPalette(window.location.search);
+    if (Object.keys(urlPalette).length) return urlPalette;
     const saved = localStorage.getItem("palette");
     return saved ? JSON.parse(saved) : defaultPalette;
   });
