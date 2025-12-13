@@ -4,3 +4,5 @@ dependancies
     - npm create vite@latest color-paletter -- --template react 
     Github pages
     - npm install --save-dev gh-pages
+    - npm run deploy
+
